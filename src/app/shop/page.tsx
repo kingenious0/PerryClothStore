@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { Suspense, useState, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductCard } from '@/components/shared/ProductCard';
 import { Button } from '@/components/ui/button';
@@ -42,7 +42,7 @@ function ShopSkeleton({ view }: { view: 'grid' | 'large' }) {
   );
 }
 
-export default function ShopPage() {
+function ShopPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { products, loading: productsLoading } = useProducts();
@@ -346,5 +346,20 @@ export default function ShopPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-4">
+        <div className="container mx-auto max-w-7xl">
+          <Skeleton className="h-12 w-48 mb-8" />
+          <ShopSkeleton view="grid" />
+        </div>
+      </div>
+    }>
+      <ShopPageContent />
+    </Suspense>
   );
 }
