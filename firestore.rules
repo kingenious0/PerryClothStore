@@ -1,0 +1,11 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // WARNING: These rules are wide open for development.
+    // In a production app, you must restrict access with authentication.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 56% 91%; /* #F5F5DC */
+    --foreground: 235 60% 15%; /* Darker navy for text */
+    --card: 60 50% 98%; /* Lighter beige/off-white */
+    --card-foreground: 235 60% 15%;
+    --popover: 60 50% 98%;
+    --popover-foreground: 235 60% 15%;
+    --primary: 235 60% 30%; /* #1A237E */
+    --primary-foreground: 60 56% 95%; /* Light beige on navy */
+    --secondary: 235 30% 88%; /* Lighter navy/gray */
+    --secondary-foreground: 235 60% 30%;
+    --muted: 235 30% 92%;
+    --muted-foreground: 235 20% 45%;
+    --accent: 51 100% 50%; /* #FFD700 */
+    --accent-foreground: 235 60% 15%; /* Dark text on gold */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 235 20% 80%;
+    --input: 235 20% 85%;
+    --ring: 235 60% 30%;
+    --radius: 0.5rem;
+    
+    /* Sidebar specific variables */
+    --sidebar-background: 235 60% 18%; /* Darker navy for sidebar */
+    --sidebar-foreground: 235 20% 85%;
+    --sidebar-primary: 51 100% 50%; /* Gold for active/primary items */
+    --sidebar-primary-foreground: 235 60% 15%;
+    --sidebar-accent: 235 60% 25%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 235 60% 25%;
+    --sidebar-ring: 51 100% 50%;
+  }
+
+  .dark {
+    --background: 235 20% 10%;
+    --foreground: 235 15% 85%;
+    --card: 235 20% 15%;
+    --card-foreground: 235 15% 85%;
+    --popover: 235 20% 15%;
+    --popover-foreground: 235 15% 85%;
+    --primary: 60 56% 91%; /* Light beige for dark mode primary */
+    --primary-foreground: 235 60% 15%;
+    --secondary: 235 20% 30%;
+    --secondary-foreground: 235 15% 85%;
+    --muted: 235 20% 20%;
+    --muted-foreground: 235 15% 65%;
+    --accent: 51 100% 50%; /* Gold accent remains */
+    --accent-foreground: 235 60% 15%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 235 20% 25%;
+    --input: 235 20% 25%;
+    --ring: 51 100% 50%;
+    
+    /* Dark Sidebar specific variables */
+    --sidebar-background: 235 20% 10%;
+    --sidebar-foreground: 235 15% 85%;
+    --sidebar-primary: 51 100% 50%;
+    --sidebar-primary-foreground: 235 60% 15%;
+    --sidebar-accent: 235 20% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 235 20% 25%;
+    --sidebar-ring: 51 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
