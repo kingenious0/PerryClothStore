@@ -115,8 +115,16 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
   
+  .premium-glass {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl;
+  }
+
   .premium-shadow {
     box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.15);
+  }
+
+  .luxury-shadow {
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.25);
   }
   
   .text-gradient {
@@ -124,6 +132,22 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .gold-gradient {
+    @apply bg-gradient-to-tr from-[#B8860B] via-[#D4AF37] to-[#FFD700];
+  }
+
+  .gold-gradient-text {
+    @apply bg-clip-text text-transparent gold-gradient;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)];
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/30;
   }
   
   .premium-card {
