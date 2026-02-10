@@ -293,7 +293,7 @@ function ShopPageContent() {
             <div className="lg:col-span-3">
                 {/* Results Count & Current Filters */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 pb-4 border-b border-primary/5">
-                  <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
+                  <div className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
                     {productsLoading ? (
                       <Skeleton className="h-4 w-32" />
                     ) : (
@@ -301,7 +301,7 @@ function ShopPageContent() {
                         <span className="text-foreground font-bold">{filteredAndSortedProducts.length}</span> Masterpieces Revealed
                       </>
                     )}
-                  </p>
+                  </div>
                   
                   {selectedCategory && (
                     <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 rounded-full font-bold tracking-widest text-[10px] uppercase">
