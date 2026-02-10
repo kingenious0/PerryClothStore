@@ -9,6 +9,7 @@ import { useProducts } from '@/hooks/use-products';
 import { useCategories } from '@/hooks/use-categories';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 import { 
   ArrowLeft, 
   Search, 
@@ -16,7 +17,8 @@ import {
   Grid3x3, 
   LayoutGrid,
   X,
-  Filter
+  Filter,
+  Crown
 } from 'lucide-react';
 import {
   Select,
