@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { X, ShoppingBag, ArrowLeft, CreditCard } from 'lucide-react';
+import { X, ShoppingBag, ArrowLeft, CreditCard, ShieldCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
