@@ -5,6 +5,7 @@ import { CartProvider } from '@/components/cart/CartProvider';
 import { ProductProvider } from '@/components/product/ProductProvider';
 import { CategoryProvider } from '@/components/category/CategoryProvider';
 import { ImageKitProvider } from '@/components/imagekit/ImageKitProvider';
+import { ThemeProvider } from '@/components/shared/ThemeProvider';
 
 export const metadata: Metadata = {
   title: {
@@ -67,19 +68,26 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <ImageKitProvider
-            publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!}
-            urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-            <ProductProvider>
-                <CategoryProvider>
-                    <CartProvider>
-                    {children}
-                    </CartProvider>
-                </CategoryProvider>
-            </ProductProvider>
-        </ImageKitProvider>
-        <Toaster />
+          <ImageKitProvider
+              publicKey={process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!}
+              urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!}
+          >
+              <ProductProvider>
+                  <CategoryProvider>
+                      <CartProvider>
+                      {children}
+                      </CartProvider>
+                  </CategoryProvider>
+              </ProductProvider>
+          </ImageKitProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

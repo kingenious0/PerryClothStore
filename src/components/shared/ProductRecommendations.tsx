@@ -58,14 +58,17 @@ export function ProductRecommendations({ product }: ProductRecommendationsProps)
 
   if (loading) {
     return (
-      <div>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">You Might Also Like</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="py-20">
+        <div className="text-center mb-16 space-y-4">
+             <span className="text-xs font-bold text-primary uppercase tracking-[0.4em]">Curated For You</span>
+             <h2 className="text-4xl md:text-6xl font-headline font-bold">You Might <span className="gold-gradient-text italic">Desire</span></h2>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[...Array(4)].map((_, i) => (
-                 <div key={i}>
-                    <Skeleton className="aspect-[4/5] w-full rounded-lg" />
-                    <Skeleton className="mt-4 h-4 w-2/3" />
-                    <Skeleton className="mt-2 h-4 w-1/4" />
+                 <div key={i} className="space-y-4">
+                    <Skeleton className="aspect-[4/5] w-full rounded-[40px]" />
+                    <Skeleton className="h-4 w-2/3 mx-auto" />
+                    <Skeleton className="h-4 w-1/4 mx-auto" />
                 </div>
             ))}
         </div>
@@ -78,11 +81,16 @@ export function ProductRecommendations({ product }: ProductRecommendationsProps)
   }
 
   return (
-    <div>
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">You Might Also Like</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {recommendations.map((recommendedProduct) => (
-          <ProductCard key={recommendedProduct.id} product={recommendedProduct} />
+    <div className="py-20">
+      <div className="text-center mb-16 space-y-4">
+           <span className="text-xs font-bold text-primary uppercase tracking-[0.4em]">Curated For You</span>
+           <h2 className="text-4xl md:text-6xl font-headline font-bold">You Might <span className="gold-gradient-text italic">Desire</span></h2>
+      </div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {recommendations.map((recommendedProduct, index) => (
+          <div key={recommendedProduct.id} className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${index * 0.1}s` }}>
+            <ProductCard product={recommendedProduct} />
+          </div>
         ))}
       </div>
     </div>

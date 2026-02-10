@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export default function PaymentVerifyPage() {
+function PaymentVerifyContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'verifying' | 'success' | 'failed'>('verifying');
@@ -70,5 +71,21 @@ export default function PaymentVerifyPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentVerifyPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+        <div className="max-w-md w-full text-center">
+          <Skeleton className="h-16 w-16 rounded-full mx-auto mb-6" />
+          <Skeleton className="h-8 w-3/4 mx-auto mb-2" />
+          <Skeleton className="h-4 w-2/3 mx-auto" />
+        </div>
+      </div>
+    }>
+      <PaymentVerifyContent />
+    </Suspense>
   );
 }

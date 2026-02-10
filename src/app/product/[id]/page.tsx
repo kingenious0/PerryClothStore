@@ -171,72 +171,75 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 md:px-8 py-8 md:py-12">
+    <div className="min-h-screen bg-background pb-20">
+      <div className="container mx-auto px-4 md:px-8 py-12 relative">
+        {/* Decorative gradient blob */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -z-10 animate-pulse" />
+
         {/* Navigation / Header */}
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex items-center justify-between mb-16">
           <Button 
             variant="ghost" 
             onClick={() => router.back()} 
-            className="group text-muted-foreground hover:text-foreground p-0 h-auto hover:bg-transparent"
+            className="group text-muted-foreground hover:text-primary p-0 h-auto hover:bg-transparent flex items-center gap-3 transition-all"
           >
-            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to Collection
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-2" />
+            <span className="text-xs font-bold uppercase tracking-[0.3em]">Back to Gallery</span>
           </Button>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Share2 className="h-5 w-5" />
+            <Button variant="outline" size="icon" className="rounded-full border-primary/10 hover:bg-primary/5 hover:text-primary transition-all">
+              <Share2 className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Heart className="h-5 w-5" />
+            <Button variant="outline" size="icon" className="rounded-full border-primary/10 hover:bg-primary/5 hover:text-primary transition-all">
+              <Heart className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-28 items-start">
           {/* Left: Image Gallery */}
-          <div className="space-y-8">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] bg-white shadow-2xl shadow-primary/5">
+          <div className="space-y-12">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] premium-glass border-primary/10 shadow-2xl group">
               {images.length > 0 ? (
                 <Image
                   src={images[activeImageIndex]}
                   alt={product.name}
                   fill
-                  className="object-cover transition-opacity duration-700 ease-in-out"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
                   priority
                 />
               ) : (
-                <div className="flex h-full items-center justify-center bg-muted">
-                  <span className="text-muted-foreground">No Image</span>
+                <div className="flex h-full items-center justify-center bg-muted/30">
+                  <span className="text-xs font-bold uppercase tracking-widest opacity-30">No Visualization</span>
                 </div>
               )}
               
-              {/* Floating Badges */}
-              <div className="absolute top-8 left-8 flex flex-col gap-3">
+              {/* Luxury Badges */}
+              <div className="absolute top-10 left-10 flex flex-col gap-3">
                 {product.stock <= 5 && product.stock > 0 && (
-                  <Badge className="bg-orange-500/90 backdrop-blur-md border-none px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
-                    Limited: {product.stock} Left
+                  <Badge className="bg-orange-500/80 backdrop-blur-xl border-none px-6 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
+                    Rarity: {product.stock} Remaining
                   </Badge>
                 )}
                 {product.stock === 0 && (
-                  <Badge variant="destructive" className="bg-red-600/90 backdrop-blur-md px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
-                    Sold Out
+                  <Badge variant="destructive" className="bg-red-600/80 backdrop-blur-xl border-none px-6 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
+                    Archived
                   </Badge>
                 )}
               </div>
             </div>
 
             {images.length > 1 && (
-              <div className="flex justify-center gap-4 px-4 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="flex justify-center gap-6 px-4 overflow-x-auto pb-4 scrollbar-hide">
                 {images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
                     className={cn(
-                      "relative h-24 w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300",
+                      "relative h-28 w-24 flex-shrink-0 overflow-hidden rounded-[20px] border-2 transition-all duration-500",
                       activeImageIndex === idx 
-                        ? "border-primary ring-4 ring-primary/5 shadow-lg scale-110" 
-                        : "border-transparent opacity-60 hover:opacity-100"
+                        ? "border-primary shadow-[0_10px_30px_rgba(212,175,55,0.3)] scale-110" 
+                        : "border-primary/5 opacity-40 hover:opacity-100 hover:border-primary/30"
                     )}
                   >
                     <Image src={img} alt="" fill className="object-cover" />
@@ -247,52 +250,52 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Right: Product Info */}
-          <div className="lg:sticky lg:top-32 space-y-10">
-            <div className="space-y-6">
-              <div className="space-y-2">
+          <div className="lg:sticky lg:top-32 space-y-12">
+            <div className="space-y-8">
+              <div className="space-y-4">
                 {categoryName && (
-                  <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary/60 block">
+                  <span className="text-xs font-bold uppercase tracking-[0.5em] text-primary/80 block italic">
                     {categoryName}
                   </span>
                 )}
-                <h1 className="text-5xl md:text-6xl font-bold font-headline tracking-tight text-foreground leading-[1.1]">
+                <h1 className="text-5xl md:text-8xl font-headline font-bold text-foreground leading-[0.9] tracking-tighter">
                   {product.name}
                 </h1>
               </div>
 
-              <div className="flex items-center gap-6">
-                <p className="text-5xl font-light text-foreground tracking-tighter">
+              <div className="flex items-center gap-8">
+                <p className="text-6xl font-headline font-bold gold-gradient-text tracking-tighter">
                   GH₵{product.price.toFixed(2)}
                 </p>
-                <div className="flex items-center gap-1 bg-accent/10 px-3 py-1 rounded-full border border-accent/20">
-                  <Star className="h-4 w-4 fill-accent text-accent" />
-                  <span className="text-sm font-bold text-accent-foreground">4.8</span>
+                <div className="flex items-center gap-2 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+                  <Star className="h-4 w-4 fill-primary text-primary" />
+                  <span className="text-sm font-bold text-primary">4.9 / 5.0</span>
                 </div>
               </div>
               
-              <Separator className="bg-foreground/5" />
+              <div className="h-px bg-gradient-to-r from-primary/20 via-primary/5 to-transparent w-full" />
               
-              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-xl">
-                {product.description}
+              <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-xl italic">
+                "{product.description}"
               </p>
             </div>
 
             {/* Variants */}
             {hasVariants && (
-              <div className="space-y-10 py-4">
+              <div className="space-y-12 py-4">
                 {product.variants && Object.entries(product.variants).map(([variantName, values]) => (
-                  <div key={variantName} className="space-y-4">
-                    <Label className="text-xs font-black uppercase tracking-[0.2em] text-foreground/40">{variantName}</Label>
+                  <div key={variantName} className="space-y-6">
+                    <Label className="text-xs font-bold uppercase tracking-[0.4em] text-muted-foreground">{variantName}</Label>
                     <div className="flex flex-wrap gap-4">
                       {values.map((value) => (
                         <button
                           key={value}
                           onClick={() => handleVariantChange(variantName, value)}
                           className={cn(
-                            "min-w-16 h-12 px-6 rounded-2xl text-sm font-bold border-2 transition-all duration-300",
+                            "min-w-20 h-14 px-8 rounded-2xl text-xs font-bold uppercase tracking-widest border-2 transition-all duration-500",
                             selectedVariants[variantName] === value
-                              ? "bg-primary border-primary text-primary-foreground shadow-2xl shadow-primary/30 -translate-y-1"
-                              : "bg-background border-foreground/5 text-foreground/60 hover:border-primary/30 hover:text-primary"
+                              ? "gold-gradient border-primary text-white shadow-[0_10px_30px_rgba(212,175,55,0.4)] -translate-y-2"
+                              : "bg-background border-primary/10 text-muted-foreground hover:border-primary/40 hover:text-primary"
                           )}
                         >
                           {value}
@@ -305,25 +308,25 @@ export default function ProductDetailPage() {
             )}
 
             {/* Actions */}
-            <div className="space-y-8 pt-6">
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-6">
-                 <div className="flex items-center bg-foreground/5 rounded-3xl p-1.5 border border-foreground/5 shadow-inner">
+            <div className="space-y-10 pt-8">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-8">
+                 <div className="flex items-center bg-primary/5 rounded-full p-2 border border-primary/10 shadow-inner w-fit">
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="rounded-2xl h-12 w-12 hover:bg-background shadow-sm disabled:opacity-30"
+                      className="rounded-full h-12 w-12 hover:bg-background shadow-sm disabled:opacity-30"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       disabled={quantity <= 1}
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <div className="w-14 text-center">
-                      <span className="text-lg font-bold">{quantity}</span>
+                    <div className="w-16 text-center">
+                      <span className="text-xl font-headline font-bold">{quantity}</span>
                     </div>
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      className="rounded-2xl h-12 w-12 hover:bg-background shadow-sm disabled:opacity-30"
+                      className="rounded-full h-12 w-12 hover:bg-background shadow-sm disabled:opacity-30"
                       onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                       disabled={quantity >= product.stock}
                     >
@@ -331,60 +334,59 @@ export default function ProductDetailPage() {
                     </Button>
                  </div>
 
-                 <div className="flex-grow grid grid-cols-2 gap-4">
+                 <div className="flex-grow grid grid-cols-2 gap-6">
                     <Button 
                       size="xl" 
                       onClick={handleAddToCart} 
                       disabled={product.stock === 0}
-                      className="rounded-3xl h-16 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl shadow-primary/20 transition-transform active:scale-95 border-none"
+                      className="rounded-full h-16 gold-gradient hover:scale-105 transition-all text-white font-bold uppercase tracking-[0.2em] shadow-[0_20px_50px_rgba(212,175,55,0.3)] border-none"
                     >
-                      <ShoppingBag className="h-5 w-5 mr-2" />
-                      Add to Bag
+                      <ShoppingBag className="h-5 w-5 mr-3" />
+                      Acquire
                     </Button>
                     <Button 
                       size="xl" 
                       variant="outline"
                       onClick={handleBuyNow} 
                       disabled={product.stock === 0}
-                      className="rounded-3xl h-16 border-2 border-foreground/10 hover:bg-foreground/5 transition-transform active:scale-95"
+                      className="rounded-full h-16 border-2 border-primary/20 hover:bg-primary/5 hover:border-primary transition-all text-xs font-bold uppercase tracking-widest"
                     >
-                      <CreditCard className="h-5 w-5 mr-2" />
-                      Buy Now
+                      Establish Possession
                     </Button>
                  </div>
               </div>
 
-              {/* Cart Summary Integration */}
+              {/* Cart Summary */}
               {productInCart.length > 0 && (
-                <div className="bg-primary/5 rounded-[2rem] p-6 border border-primary/10 flex items-center justify-between animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center gap-4">
-                    <div className="bg-primary/10 p-3 rounded-2xl">
-                      <ShoppingBag className="h-6 w-6 text-primary" />
+                <div className="premium-glass rounded-[32px] p-8 border border-primary/20 flex items-center justify-between animate-in fade-in slide-in-from-bottom-8 duration-700">
+                  <div className="flex items-center gap-6">
+                    <div className="bg-primary/10 p-4 rounded-2xl">
+                        <ShoppingBag className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-primary">Already in your bag</p>
-                      <p className="text-xs text-primary/60">{productInCart.reduce((sum, item) => sum + item.quantity, 0)} items added</p>
+                        <p className="text-sm font-bold uppercase tracking-widest text-primary">In Your Possession</p>
+                        <p className="text-xs text-primary/60 font-medium">Currently {productInCart.reduce((sum, item) => sum + item.quantity, 0)} units reserved.</p>
                     </div>
                   </div>
-                  <Button variant="link" asChild className="text-primary font-black uppercase text-[10px] tracking-widest">
-                    <Link href="/cart">Go to Checkout</Link>
+                  <Button variant="link" asChild className="text-primary font-bold uppercase text-[10px] tracking-[0.3em] hover:tracking-[0.4em] transition-all">
+                    <Link href="/cart">Examine Bag</Link>
                   </Button>
                 </div>
               )}
             </div>
 
             {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-6 pt-10">
+            <div className="grid grid-cols-3 gap-8 pt-16 border-t border-primary/10">
               {[
-                { icon: Truck, label: "Complimentary Delivery" },
-                { icon: ShieldCheck, label: "Authenticity Guaranteed" },
-                { icon: RotateCcw, label: "60-Day Returns" }
+                { icon: Truck, label: "Concierge Delivery" },
+                { icon: ShieldCheck, label: "Certified Original" },
+                { icon: RotateCcw, label: "Elegant Returns" }
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center text-center space-y-3 group cursor-default">
-                  <div className="bg-foreground/[0.03] p-4 rounded-[1.5rem] group-hover:bg-primary/5 transition-colors duration-300">
-                    <item.icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                <div key={i} className="flex flex-col items-center text-center space-y-4 group cursor-default">
+                  <div className="bg-primary/5 p-5 rounded-[22px] group-hover:bg-primary/10 transition-colors duration-500">
+                    <item.icon className="h-6 w-6 text-primary/60 group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 leading-tight px-2">
+                  <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-muted-foreground/80 leading-tight">
                     {item.label}
                   </span>
                 </div>
@@ -394,16 +396,7 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Recommendations Section */}
-        <div className="mt-40 border-t border-foreground/[0.04] pt-24">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-            <div className="space-y-4">
-              <span className="text-xs font-black uppercase tracking-[0.4em] text-primary/60">Curated For You</span>
-              <h2 className="text-4xl md:text-5xl font-bold font-headline tracking-tighter">You Might Also Like</h2>
-            </div>
-            <Button variant="link" className="text-foreground font-black uppercase tracking-widest text-xs decoration-2 underline-offset-8" asChild>
-              <Link href="/shop">Explore Entire Collection</Link>
-            </Button>
-          </div>
+        <div className="mt-60">
           <ProductRecommendations product={product}/>
         </div>
       </div>

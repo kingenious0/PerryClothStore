@@ -104,212 +104,246 @@ export default function ShopPage() {
   const hasActiveFilters = selectedCategory || searchQuery || sortBy !== 'newest';
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 md:px-8 py-8">
+    <div className="min-h-screen bg-background pb-20">
+      <div className="container mx-auto px-4 md:px-8 py-12 relative">
+         {/* Decorative gradient blob */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+
         {/* Back Button */}
         <Button 
           variant="ghost" 
           onClick={() => router.back()} 
-          className="mb-6"
+          className="mb-12 hover:bg-primary/10 hover:text-primary transition-all rounded-full group px-6"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Go Back
+          <ArrowLeft className="mr-3 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+          Return to Essence
         </Button>
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
-            Our Collection
+        <div className="max-w-4xl mb-16">
+          <span className="text-xs font-bold text-primary uppercase tracking-[0.4em] mb-4 block">The Gallery</span>
+          <h1 className="text-5xl md:text-8xl font-headline font-bold leading-tight mb-6">
+            Our <span className="gold-gradient-text italic">Curation</span>
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Discover our curated selection of premium products
+          <p className="text-lg text-muted-foreground max-w-2xl font-light leading-relaxed">
+            Meticulously selected pieces that embody our philosophy of timeless elegance and unparalleled craft.
           </p>
         </div>
 
-        {/* Search and Filters Bar */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
-          <div className="flex flex-col lg:flex-row gap-4">
+        {/* Search and Filters Bar - Premium Glassmorphism */}
+        <div className="premium-glass rounded-[40px] p-8 mb-12 flex flex-col lg:flex-row gap-6 items-center">
             {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="flex-1 w-full relative group">
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-primary opacity-50 group-focus-within:opacity-100 transition-opacity" />
               <Input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Seek and you shall find..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 rounded-xl"
+                className="pl-14 pr-12 h-14 rounded-full bg-background/50 border-primary/20 focus-visible:ring-primary shadow-sm text-sm tracking-wide"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               )}
             </div>
 
-            {/* Sort */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full lg:w-[200px] h-12 rounded-xl">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="name-asc">Name: A to Z</SelectItem>
-                <SelectItem value="name-desc">Name: Z to A</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
+                {/* Sort */}
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-full lg:w-[220px] h-14 rounded-full bg-background/50 border-primary/20 focus:ring-primary">
+                    <SelectValue placeholder="Ordering" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background/95 backdrop-blur-xl border-primary/20">
+                    <SelectItem value="newest">Latest Collections</SelectItem>
+                    <SelectItem value="price-low">Value: Low to High</SelectItem>
+                    <SelectItem value="price-high">Value: High to Low</SelectItem>
+                    <SelectItem value="name-asc">Alphabetical: A to Z</SelectItem>
+                    <SelectItem value="name-desc">Alphabetical: Z to A</SelectItem>
+                  </SelectContent>
+                </Select>
 
-            {/* View Toggle */}
-            <div className="flex gap-2">
-              <Button
-                variant={viewMode === 'grid' ? 'default' : 'outline'}
-                size="icon"
-                onClick={() => setViewMode('grid')}
-                className="h-12 w-12 rounded-xl"
-              >
-                <Grid3x3 className="h-5 w-5" />
-              </Button>
-              <Button
-                variant={viewMode === 'large' ? 'default' : 'outline'}
-                size="icon"
-                onClick={() => setViewMode('large')}
-                className="h-12 w-12 rounded-xl"
-              >
-                <LayoutGrid className="h-5 w-5" />
-              </Button>
+                {/* View Toggle */}
+                <div className="hidden sm:flex gap-2 p-1.5 bg-background/50 backdrop-blur-md rounded-full border border-primary/10">
+                  <Button
+                    variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                    size="icon"
+                    onClick={() => setViewMode('grid')}
+                    className={cn(
+                        "h-11 w-11 rounded-full transition-all duration-300",
+                        viewMode === 'grid' ? "gold-gradient shadow-lg" : "text-muted-foreground hover:text-primary"
+                    )}
+                  >
+                    <Grid3x3 className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'large' ? 'default' : 'ghost'}
+                    size="icon"
+                    onClick={() => setViewMode('large')}
+                    className={cn(
+                        "h-11 w-11 rounded-full transition-all duration-300",
+                        viewMode === 'large' ? "gold-gradient shadow-lg" : "text-muted-foreground hover:text-primary"
+                    )}
+                  >
+                    <LayoutGrid className="h-5 w-5" />
+                  </Button>
+                </div>
+
+                {/* Mobile Filter Toggle */}
+                <Button
+                  variant="outline"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="lg:hidden flex-1 h-14 rounded-full border-primary/20 hover:bg-primary/5"
+                >
+                  <Filter className="mr-3 h-5 w-5 text-primary" />
+                  Filters
+                </Button>
             </div>
-
-            {/* Mobile Filter Toggle */}
-            <Button
-              variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden h-12 rounded-xl"
-            >
-              <Filter className="mr-2 h-5 w-5" />
-              Filters
-            </Button>
-          </div>
         </div>
 
-        {/* Category Filters */}
-        <div className={`mb-8 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold flex items-center gap-2">
-                <SlidersHorizontal className="h-5 w-5" />
-                Categories
-              </h3>
-              {hasActiveFilters && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={clearFilters}
-                  className="text-purple-600 hover:text-purple-700"
-                >
-                  Clear All
-                </Button>
-              )}
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              <Button 
-                asChild 
-                variant={!selectedCategory ? 'default' : 'outline'}
-                className="rounded-full"
-              >
-                <Link href="/shop">
-                  All Products
-                  {!selectedCategory && (
-                    <Badge variant="secondary" className="ml-2">
-                      {products.length}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+            {/* Sidebar Filters */}
+            <aside className={cn(
+                "lg:col-span-1 space-y-12",
+                showFilters ? "block" : "hidden lg:block"
+            )}>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-4 border-b border-primary/10">
+                  <h3 className="font-headline font-bold text-xl tracking-tight flex items-center gap-3 italic">
+                    Categories
+                  </h3>
+                  {hasActiveFilters && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="text-[10px] uppercase tracking-widest font-bold text-primary hover:bg-primary/5"
+                    >
+                      Reset
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <Link 
+                    href="/shop"
+                    className={cn(
+                        "group flex items-center justify-between py-3 px-4 rounded-2xl transition-all duration-300",
+                        !selectedCategory 
+                            ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                            : "hover:bg-primary/5 text-muted-foreground hover:text-primary"
+                    )}
+                  >
+                    <span className="font-medium tracking-wide">All Perspectives</span>
+                    <Badge variant={!selectedCategory ? 'secondary' : 'outline'} className="rounded-full font-bold">
+                        {products.length}
+                    </Badge>
+                  </Link>
+                  
+                  {categoriesLoading ? (
+                    [...Array(5)].map((_, i) => (
+                      <Skeleton key={i} className="h-12 w-full rounded-2xl" />
+                    ))
+                  ) : (
+                    categories.map((category) => {
+                      const count = products.filter(p => p.category_id === category.id).length;
+                      const isActive = selectedCategory?.toLowerCase() === category.name.toLowerCase();
+                      
+                      return (
+                        <Link
+                          key={category.id}
+                          href={`/shop?category=${category.name.toLowerCase()}`}
+                          className={cn(
+                            "group flex items-center justify-between py-3 px-4 rounded-2xl transition-all duration-300",
+                            isActive 
+                                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                                : "hover:bg-primary/5 text-muted-foreground hover:text-primary"
+                          )}
+                        >
+                          <span className="font-medium tracking-wide">{category.name}</span>
+                          {count > 0 && (
+                            <Badge variant={isActive ? 'secondary' : 'outline'} className="rounded-full font-bold">
+                              {count}
+                            </Badge>
+                          )}
+                        </Link>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+
+              {/* Decorative Brand Section */}
+              <div className="bg-primary/5 p-8 rounded-[40px] border border-primary/10">
+                  <Crown className="h-8 w-8 text-primary mb-4 opacity-50" />
+                  <h4 className="font-headline font-bold text-lg mb-2">Private Viewing</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed italic">
+                    "Fashion is not just clothes, it's the armor for the soul."
+                  </p>
+              </div>
+            </aside>
+
+            {/* Main Shop Content */}
+            <div className="lg:col-span-3">
+                {/* Results Count & Current Filters */}
+                <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 pb-4 border-b border-primary/5">
+                  <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
+                    {productsLoading ? (
+                      <Skeleton className="h-4 w-32" />
+                    ) : (
+                      <>
+                        <span className="text-foreground font-bold">{filteredAndSortedProducts.length}</span> Masterpieces Revealed
+                      </>
+                    )}
+                  </p>
+                  
+                  {selectedCategory && (
+                    <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 rounded-full font-bold tracking-widest text-[10px] uppercase">
+                        Archive: {selectedCategory}
                     </Badge>
                   )}
-                </Link>
-              </Button>
-              
-              {categoriesLoading ? (
-                [...Array(3)].map((_, i) => (
-                  <Skeleton key={i} className="h-10 w-24 rounded-full" />
-                ))
-              ) : (
-                categories.map((category) => {
-                  const count = products.filter(p => p.category_id === category.id).length;
-                  const isActive = selectedCategory?.toLowerCase() === category.name.toLowerCase();
-                  
-                  return (
-                    <Button
-                      key={category.id}
-                      variant={isActive ? 'default' : 'outline'}
-                      asChild
-                      className="rounded-full"
-                    >
-                      <Link href={`/shop?category=${category.name.toLowerCase()}`}>
-                        {category.name}
-                        {count > 0 && (
-                          <Badge variant={isActive ? 'secondary' : 'outline'} className="ml-2">
-                            {count}
-                          </Badge>
-                        )}
-                      </Link>
+                </div>
+
+                {/* Products Grid */}
+                {productsLoading ? (
+                  <ShopSkeleton view={viewMode} />
+                ) : filteredAndSortedProducts.length > 0 ? (
+                  <div className={`grid gap-x-8 gap-y-12 ${
+                    viewMode === 'grid' 
+                      ? 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3' 
+                      : 'grid-cols-1 sm:grid-cols-2'
+                  }`}>
+                    {filteredAndSortedProducts.map((product, index) => (
+                      <div key={product.id} className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${index * 0.05}s` }}>
+                        <ProductCard product={product} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-40 text-center space-y-8 premium-glass rounded-[60px] border-dashed border-primary/20">
+                    <div className="relative">
+                        <Search className="h-20 w-20 text-primary opacity-20" />
+                        <div className="absolute inset-0 animate-ping rounded-full border border-primary/10 scale-150" />
+                    </div>
+                    <div className="space-y-4">
+                        <h2 className="text-3xl font-headline font-bold italic">The search continues</h2>
+                        <p className="text-muted-foreground max-w-xs mx-auto font-light leading-relaxed">
+                          {searchQuery 
+                            ? `We couldn't find any artifacts matching "${searchQuery}". Perhaps try a different search?`
+                            : 'This collection is currently being curated. Please check back later.'}
+                        </p>
+                    </div>
+                    <Button onClick={clearFilters} variant="outline" className="rounded-full px-10 h-14 font-bold uppercase tracking-widest border-primary/30 hover:bg-primary hover:text-white transition-all">
+                      View All Collections
                     </Button>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Results Count */}
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-gray-600 dark:text-gray-400">
-            {productsLoading ? (
-              <Skeleton className="h-6 w-32" />
-            ) : (
-              <>
-                Showing <span className="font-bold text-gray-900 dark:text-white">{filteredAndSortedProducts.length}</span> {filteredAndSortedProducts.length === 1 ? 'product' : 'products'}
-                {selectedCategory && (
-                  <span className="ml-1">
-                    in <span className="font-bold text-purple-600">{selectedCategory}</span>
-                  </span>
+                  </div>
                 )}
-              </>
-            )}
-          </p>
-        </div>
-
-        {/* Products Grid */}
-        {productsLoading ? (
-          <ShopSkeleton view={viewMode} />
-        ) : filteredAndSortedProducts.length > 0 ? (
-          <div className={`grid gap-6 ${
-            viewMode === 'grid' 
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-              : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-          }`}>
-            {filteredAndSortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 mb-6">
-              <Search className="h-10 w-10 text-gray-400" />
             </div>
-            <h2 className="text-2xl font-bold mb-2">No products found</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              {searchQuery 
-                ? `No products match "${searchQuery}"`
-                : 'There are no products in this category'}
-            </p>
-            <Button onClick={clearFilters} variant="outline">
-              Clear Filters
-            </Button>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
