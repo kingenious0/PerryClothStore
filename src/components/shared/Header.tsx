@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, ShoppingBag, LogIn, UserPlus, LogOut, Settings, Package } from "lucide-react";
+import { Search, User, ShoppingBag, LogIn, UserPlus, LogOut, Settings, Package, Menu, X } from "lucide-react";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { auth } from "@/firebase/config";
@@ -22,6 +22,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
@@ -33,6 +40,7 @@ export function Header() {
   const { cartCount } = useCart();
   const [isMounted, setIsMounted] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { toast } = useToast();
 
@@ -78,25 +86,30 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-sm border-b">
+    <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b shadow-sm">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
         <Logo />
+        
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "text-foreground/80 hover:text-foreground transition-colors",
-                pathname === link.href && "text-foreground font-semibold"
+                "text-foreground/80 hover:text-foreground transition-colors font-medium",
+                pathname === link.href && "text-foreground font-semibold border-b-2 border-primary"
               )}
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon">
+
+        {/* Right Side Actions */}
+        <div className="flex items-center gap-2 md:gap-4">
+          {/* Search Button - Hidden on mobile to save space */}
+          <Button variant="ghost" size="icon" className="hidden sm:flex">
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
@@ -177,6 +190,7 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Cart */}
           <CartSheet>
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingBag className="h-5 w-5" />
@@ -188,6 +202,42 @@ export function Header() {
               <span className="sr-only">Cart</span>
             </Button>
           </CartSheet>
+
+          {/* Mobile Menu Toggle */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="flex flex-col gap-4 mt-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "text-lg font-medium py-2 px-4 rounded-lg transition-colors hover:bg-accent",
+                      pathname === link.href && "bg-accent text-accent-foreground"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Button asChild variant="outline" className="mt-4 w-full">
+                  <Link href="/orders" onClick={() => setMobileMenuOpen(false)}>
+                    <Package className="mr-2 h-4 w-4" />
+                    My Orders
+                  </Link>
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
