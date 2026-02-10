@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/shared/ProductCard';
 import { useProducts } from '@/hooks/use-products';
-import { ArrowRight, Sparkles, Shield, Truck, Award } from 'lucide-react';
+import { ArrowRight, Sparkles, Shield, Truck, Award, Package } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 function FeaturedProductsSkeleton() {
